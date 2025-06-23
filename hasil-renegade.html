@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hasil Kultivasi Renegade Immortal</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #001f3f, #002b55);
+      color: #e0f7ff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+      text-align: center;
+    }
+    .result-box {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 2.5rem;
+      border-radius: 16px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 0 20px #00b8e6;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #00d4ff;
+      margin-bottom: 1.5rem;
+    }
+    .highlight {
+      color: #00f2ff;
+      font-weight: bold;
+    }
+    .quote {
+      font-style: italic;
+      margin-top: 1.5rem;
+      color: #aeefff;
+    }
+  </style>
+</head>
+<body>
+  <div class="result-box" id="resultContainer">
+    <h1>ʜᴀꜱɪʟ ᴋᴜʟᴛɪᴠᴀꜱɪ</h1>
+    <p id="output"></p>
+    <p class="quote" id="quote"></p>
+  </div>  <script>
+    const data = JSON.parse(localStorage.getItem("renegadeKultivasi"));
+    const output = document.getElementById("output");
+    const quote = document.getElementById("quote");
+
+    if (!data) {
+      output.innerHTML = "Data tidak ditemukan. Silakan ulangi tes.";
+    } else {
+      let skor = 0;
+      const nilai = { rendah: 0, tengah: 1, tinggi: 2 };
+      skor += nilai[data.tujuan] + nilai[data.sifat] + nilai[data.gaya];
+
+      if (data.umur >= 40) skor += 1;
+      if (data.umur >= 60) skor += 1;
+      if (data.umur >= 100) skor += 1;
+
+      let tingkat = "Qi Condensation";
+      let kutipan = "Setiap awal adalah langkah kecil dalam jalan panjang menuju abadi.";
+
+      if (skor <= 2) {
+        tingkat = "Foundation Establishment";
+        kutipan = "Kamu mulai mengerti dunia kultivasi, tapi perjalanan masih panjang.";
+      } else if (skor <= 4) {
+        tingkat = "Core Formation";
+        kutipan = "Inti kekuatanmu mulai terbentuk, bersiaplah untuk masa depan.";
+      } else if (skor <= 6) {
+        tingkat = "Nascent Soul";
+        kutipan = "Jiwamu sudah memiliki bentuk, dan pengaruhmu mulai terasa.";
+      } else if (skor <= 8) {
+        tingkat = "Spirit Severing";
+        kutipan = "Kamu mulai melepaskan belenggu duniawi demi kebangkitan sejati.";
+      } else if (skor <= 10) {
+        tingkat = "Nirvana Scryer";
+        kutipan = "Pandangmu melampaui dunia ini, dan karma pun tunduk padamu.";
+      } else {
+        tingkat = "Nirvana Shatterer";
+        kutipan = "Kamu telah menghancurkan hukum dunia dan menulis ulang takdirmu sendiri.";
+      }
+
+      output.innerHTML = `Kultivator <span class="highlight">${data.nama}</span> (Usia: <span class="highlight">${data.umur}</span>)<br>
+        Tingkat Kultivasi: <span class="highlight">${tingkat}</span><br>
+        Tujuan hidupmu: ${data.tujuan}<br>
+        Sifatmu: ${data.sifat}<br>
+        Gaya bertarung: ${data.gaya}`;
+
+      quote.innerText = kutipan;
+    }
+  </script></body>
+</html>
